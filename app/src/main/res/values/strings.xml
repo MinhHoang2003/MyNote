@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">ColorNoteTaking</string>
+    <string name="search_hint_title">Search your note</string>
+    <string name="note">Note</string>
+    <string name="reminder">Reminder</string>
+    <string name="label">Label</string>
+    <string name="recycle_bin">Recycle bin</string>
+    <string name="setting">Setting</string>
+    <string name="about_author">About author</string>
+    <string name="pined_items">Pined items</string>
+    <string name="normal_items">Normal Items</string>
+    <string name="to_do">To Do</string>
+    <string name="time_demo">March 20,2019 11:30AM</string>
+    <string name="demo_check_items">0/3</string>
+    <string name="other">Other</string>
 </resources>
