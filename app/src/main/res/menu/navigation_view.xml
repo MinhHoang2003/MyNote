@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group_menu_about_note"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_note"
+            android:icon="@drawable/ic_lightbulb_outline_black_24dp"
+            android:title="@string/title_note" />
+        <item
+            android:id="@+id/menu_reminder"
+            android:icon="@drawable/ic_alarm_on_black_24dp"
+            android:title="@string/title_reminder" />
+
+    </group>
+    <group android:id="@+id/group_menu_about_app">
+        <item
+            android:id="@+id/menu_label"
+            android:icon="@drawable/ic_tag_black_24dp"
+            android:title="@string/title_label" />
+        <item
+            android:id="@+id/menu_recycle_bin"
+            android:icon="@drawable/ic_delete_black_24dp"
+            android:title="@string/title_recycle_bin" />
+
+    </group>
+    <item android:title="@string/title_other">
+        <menu android:id="@+id/menu_about_author">
+            <item
+                android:id="@+id/menu_setting"
+                android:icon="@drawable/ic_settings_black_24dp"
+                android:title="@string/title_setting" />
+            <item
+                android:id="@+id/menu_about"
+                android:icon="@drawable/ic_about_black_24dp"
+                android:title="@string/title_about_author" />
+
+        </menu>
+    </item>
+</menu>
