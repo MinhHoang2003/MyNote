@@ -103,4 +103,5 @@ public class SubItemDAOImpl extends AppDatabase implements SubItemDAO {
         mSQLiteDatabase.close();
         return result >= 0;
     }
+
 }

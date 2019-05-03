@@ -50,10 +50,10 @@ public class TaskAdapter extends BaseAdapter<Task, TaskAdapter.TaskHolder> imple
 
         private TaskHolder(@NonNull View itemView) {
             super(itemView);
-            mTextTitle = itemView.findViewById(R.id.test_text_task_title);
-            mTextDateTime = itemView.findViewById(R.id.test_text_date_time);
-            mImageCheck = itemView.findViewById(R.id.test_image_check_items);
-            mTextProgress = itemView.findViewById(R.id.test_text_check_items);
+            mTextTitle = itemView.findViewById(R.id.text_task_title);
+            mTextDateTime = itemView.findViewById(R.id.text_date_time);
+            mImageCheck = itemView.findViewById(R.id.image_check_items);
+            mTextProgress = itemView.findViewById(R.id.text_check_items);
         }
 
         private void bindView(Task task) {

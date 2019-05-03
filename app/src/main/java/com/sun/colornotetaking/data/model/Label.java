@@ -32,7 +32,6 @@ public class Label {
     public void setColor(int color) {
         mColor = color;
     }
-
     public void setId(int id) {
         mId = id;
     }

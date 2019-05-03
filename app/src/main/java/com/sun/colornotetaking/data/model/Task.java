@@ -27,11 +27,9 @@ public class Task {
     public int getId() {
         return mId;
     }
-
     public String getTitle() {
         return mTitle;
     }
-
     public String getDescription() {
         return mDescription;
     }
@@ -39,7 +37,6 @@ public class Task {
     public List<SubItem> getSubItems() {
         return mSubItems;
     }
-
     public String getDate() {
         return mDate;
     }

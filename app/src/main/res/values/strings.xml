@@ -14,6 +14,8 @@
     <string name="demo_check_items">0/3</string>
     <string name="title_other">Other</string>
     <string name="title_delete">Delete All Note</string>
+    <string name="title_delete_item">Delete this task</string>
+    <string name="title_restore_item">Restore this task</string>
     <string name="msg_add_task_done">Add New Task Done</string>
     <string name="msg_can_not_add_task">Can not add new task</string>
     <string name="msg_edit_task_done">Edit task done</string>
@@ -21,4 +23,9 @@
     <string name="msg_remove_task_done">Remove task done</string>
     <string name="msg_can_not_remove_task">Can not remove this task</string>
     <string name="msg_note_not_existing">Note Note Existing</string>
+    <string name="msg_recycle_bin_empty">Recycle bin is empty</string>
+    <string name="msg_remove_task_error">Can not remove task</string>
+    <string name="msg_restore_task_done">Restored task</string>
+    <string name="msg_restore_task_error">Can not restore task</string>
+    <string name="action_undo">UNDO</string>
 </resources>
