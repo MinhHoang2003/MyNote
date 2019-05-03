@@ -12,6 +12,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.navigation_icon);
+        toolbar.setNavigationIcon(R.drawable.ic_navigation_black_24dp);
     }
 }

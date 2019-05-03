@@ -3,8 +3,8 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="colorMainBackground">#D6D5D5</color>
-    <color name="colorWhite">#FFFFFF</color>
-    <color name="colorHeaderNavigationBackground">#8DFDD835</color>
-    <color name="colorDateReminderBackground">#C0CA33</color>
+    <color name="color_main_background">#D6D5D5</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_bg_header_navigation_view">#8DFDD835</color>
+    <color name="color_bg_date_reminder_drawable">#C0CA33</color>
 </resources>
