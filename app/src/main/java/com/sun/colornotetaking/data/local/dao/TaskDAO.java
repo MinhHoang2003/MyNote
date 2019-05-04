@@ -17,5 +17,4 @@ public interface TaskDAO {
 
     boolean removeTask(int task_id);
 
-
 }

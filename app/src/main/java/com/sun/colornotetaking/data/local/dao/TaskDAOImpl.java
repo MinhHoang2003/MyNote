@@ -12,20 +12,21 @@ import com.sun.colornotetaking.data.model.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskDatabase extends AppDatabase implements TaskDAO{
+public class TaskDAOImpl extends AppDatabase implements TaskDAO {
 
-    private  static  TaskDatabase sTaskDatabase;
+    private static TaskDAOImpl sTaskDAOImpl;
     private CheckItemDAO mCheckItemDatabase;
-    public TaskDatabase(Context context) {
+
+    public TaskDAOImpl(Context context) {
         super(context);
-        mCheckItemDatabase = CheckItemDatabase.getInstance(context);
+        mCheckItemDatabase = CheckItemDAOImpl.getInstance(context);
     }
 
-    public static TaskDatabase getInstance(Context context){
-        if(sTaskDatabase==null){
-            sTaskDatabase = new TaskDatabase(context);
+    public static TaskDAOImpl getInstance(Context context) {
+        if (sTaskDAOImpl == null) {
+            sTaskDAOImpl = new TaskDAOImpl(context);
         }
-        return sTaskDatabase;
+        return sTaskDAOImpl;
     }
 
     @Override
@@ -33,8 +34,8 @@ public class TaskDatabase extends AppDatabase implements TaskDAO{
         mSQLiteDatabase = getWritableDatabase();
         mSQLiteDatabase.beginTransaction();
         long rowId = addInfoToTaskTable(task);
-        if(rowId>0) {
-            mCheckItemDatabase.addCheckItems(task.getCheckItemList(),task.getId());
+        if (rowId > 0) {
+            mCheckItemDatabase.addCheckItems(task.getCheckItemList(), task.getId());
             mSQLiteDatabase.setTransactionSuccessful();
             return true;
         }
@@ -60,7 +61,6 @@ public class TaskDatabase extends AppDatabase implements TaskDAO{
         mSQLiteDatabase.close();
         return listTask;
     }
-
 
     @Override
     public Task getTaskById(int taskId) {
@@ -92,7 +92,7 @@ public class TaskDatabase extends AppDatabase implements TaskDAO{
         values.put(TaskEntry.IS_DELETE, task.isDelete());
         int result = mSQLiteDatabase.update(TaskEntry.TABLE_NAME, values, where, whereArgs);
         mSQLiteDatabase.close();
-        return result>0;
+        return result > 0;
     }
 
     @Override
@@ -108,7 +108,6 @@ public class TaskDatabase extends AppDatabase implements TaskDAO{
         return false;
     }
 
-
     private long addInfoToTaskTable(Task task) {
 
         mSQLiteDatabase = getWritableDatabase();
@@ -123,7 +122,6 @@ public class TaskDatabase extends AppDatabase implements TaskDAO{
         mSQLiteDatabase.close();
         return rowId;
     }
-
 
     private Task createTask(Cursor cursor, int taskId) {
         List<CheckItem> checkItems = mCheckItemDatabase.getCheckItemsByTaskId(taskId);

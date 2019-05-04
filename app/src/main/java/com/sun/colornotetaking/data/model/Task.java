@@ -14,7 +14,6 @@ public class Task {
     private final boolean mIsPin;
     private final boolean mIsDelete;
 
-
     public Task(TaskBuilder taskBuilder) {
         mId = taskBuilder.mId;
         mTitle = taskBuilder.mTitle;
@@ -106,7 +105,5 @@ public class Task {
             Task task = new Task(this);
             return task;
         }
-
-
     }
 }

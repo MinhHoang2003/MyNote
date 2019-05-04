@@ -8,7 +8,7 @@ public interface CheckItemDAO {
 
     boolean addCheckItem(CheckItem checkItem, long task_id);
 
-    boolean addCheckItems(List<CheckItem> checkItems,long task_id);
+    boolean addCheckItems(List<CheckItem> checkItems, long task_id);
 
     List<CheckItem> getCheckItemsByTaskId(int taskId);
 

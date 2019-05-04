@@ -10,19 +10,19 @@ import com.sun.colornotetaking.data.model.CheckItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CheckItemDatabase extends AppDatabase implements CheckItemDAO {
+public class CheckItemDAOImpl extends AppDatabase implements CheckItemDAO {
 
-    private static CheckItemDatabase sCheckItemDatabase;
+    private static CheckItemDAOImpl sCheckItemDAOImpl;
 
-    protected CheckItemDatabase(Context context) {
+    protected CheckItemDAOImpl(Context context) {
         super(context);
     }
 
-    public static CheckItemDatabase getInstance(Context context){
-        if(sCheckItemDatabase==null){
-            sCheckItemDatabase = new CheckItemDatabase(context);
+    public static CheckItemDAOImpl getInstance(Context context) {
+        if (sCheckItemDAOImpl == null) {
+            sCheckItemDAOImpl = new CheckItemDAOImpl(context);
         }
-        return sCheckItemDatabase;
+        return sCheckItemDAOImpl;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class CheckItemDatabase extends AppDatabase implements CheckItemDAO {
     @Override
     public boolean addCheckItems(List<CheckItem> checkItems, long task_id) {
         for (CheckItem item : checkItems) {
-            if(!addCheckItem(item,task_id)) return false;
+            if (!addCheckItem(item, task_id)) return false;
         }
         return true;
     }

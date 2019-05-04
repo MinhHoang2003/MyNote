@@ -17,11 +17,6 @@ public class CheckItem {
         this.mIsDone = isDone;
     }
 
-
-
-    public CheckItem() {
-    }
-
     public String getName() {
         return mName;
     }
