@@ -1,12 +1,13 @@
 package com.sun.colornotetaking.data.model;
 
 public class Label {
+
     private int mId;
     private String mName;
     private int mColor;
 
-    public Label(String name) {
-        mName = name;
+    public Label(int color) {
+        mColor = color;
     }
 
     public Label(int id, String name, int Color) {

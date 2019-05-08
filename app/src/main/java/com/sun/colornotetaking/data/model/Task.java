@@ -1,24 +1,23 @@
 package com.sun.colornotetaking.data.model;
 
-
 import java.util.List;
 
 public class Task {
 
     private final int mId;
-    private final String mTitle;
-    private final String mDescription;
-    private final List<CheckItem> mCheckItemList;
-    private final String mDate;
-    private final String mTime;
-    private final boolean mIsPin;
-    private final boolean mIsDelete;
+    private String mTitle;
+    private String mDescription;
+    private List<SubItem> mSubItems;
+    private String mDate;
+    private String mTime;
+    private boolean mIsPin;
+    private boolean mIsDelete;
 
-    public Task(TaskBuilder taskBuilder) {
+    private Task(TaskBuilder taskBuilder) {
         mId = taskBuilder.mId;
         mTitle = taskBuilder.mTitle;
         mDescription = taskBuilder.mDescription;
-        mCheckItemList = taskBuilder.mCheckItemList;
+        mSubItems = taskBuilder.mSubItems;
         mDate = taskBuilder.mDate;
         mTime = taskBuilder.mTime;
         mIsPin = taskBuilder.mIsPin;
@@ -37,8 +36,8 @@ public class Task {
         return mDescription;
     }
 
-    public List<CheckItem> getCheckItemList() {
-        return mCheckItemList;
+    public List<SubItem> getSubItems() {
+        return mSubItems;
     }
 
     public String getDate() {
@@ -57,53 +56,85 @@ public class Task {
         return mIsDelete;
     }
 
-    public static class TaskBuilder {
+    public void setTitle(String title) {
+        mTitle = title;
+    }
 
+    public void setDescription(String description) {
+        mDescription = description;
+    }
+
+    public void setSubItems(List<SubItem> subItems) {
+        mSubItems = subItems;
+    }
+
+    public void setDate(String date) {
+        mDate = date;
+    }
+
+    public void setTime(String time) {
+        mTime = time;
+    }
+
+    public void setPin(boolean pin) {
+        mIsPin = pin;
+    }
+
+    public void setDelete(boolean delete) {
+        mIsDelete = delete;
+    }
+
+    public static class TaskBuilder {
+        private String mTitle;
         private int mId;
-        private final String mTitle;
         private String mDescription;
-        private List<CheckItem> mCheckItemList;
+        private List<SubItem> mSubItems;
         private String mDate;
         private String mTime;
         private boolean mIsPin;
         private boolean mIsDelete;
 
-        public TaskBuilder(String title){
-            this.mTitle = title;
+        public TaskBuilder(String title) {
+            mTitle = title;
         }
-        public TaskBuilder setId(int id){
-            this.mId = id;
+
+        public TaskBuilder setId(int id) {
+            mId = id;
             return this;
         }
 
-        public TaskBuilder setDescription(String description){
-            this.mDescription = description;
-            return this;
-        }
-        public TaskBuilder setCheckItemList(List<CheckItem> checkItemList){
-            this.mCheckItemList = checkItemList;
-            return this;
-        }
-        public TaskBuilder setDate(String date){
-            this.mDate = date;
-            return this;
-        }
-        public TaskBuilder setTime(String time){
-            this.mTime = time;
-            return this;
-        }
-        public TaskBuilder setIsPin(boolean isPin){
-            this.mIsPin = isPin;
-            return this;
-        }
-        public TaskBuilder setIsDelete(boolean isDelete){
-            this.mIsDelete = isDelete;
+        public TaskBuilder setDescription(String description) {
+            mDescription = description;
             return this;
         }
 
-        public Task build(){
-            Task task = new Task(this);
-            return task;
+        public TaskBuilder setSubItems(List<SubItem> subItems) {
+            mSubItems = subItems;
+            return this;
+        }
+
+        public TaskBuilder setDate(String date) {
+            mDate = date;
+            return this;
+        }
+
+        public TaskBuilder setTime(String time) {
+            mTime = time;
+            return this;
+        }
+
+        public TaskBuilder setIsPin(boolean isPin) {
+            mIsPin = isPin;
+            return this;
+        }
+
+        public TaskBuilder setIsDelete(boolean isDelete) {
+            mIsDelete = isDelete;
+            return this;
+        }
+
+        public Task build() {
+            return new Task(this);
         }
     }
 }

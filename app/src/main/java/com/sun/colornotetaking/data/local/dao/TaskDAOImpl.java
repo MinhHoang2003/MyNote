@@ -6,7 +6,7 @@ import android.database.Cursor;
 
 import com.sun.colornotetaking.data.local.AppDatabase;
 import com.sun.colornotetaking.data.local.entry.TaskEntry;
-import com.sun.colornotetaking.data.model.CheckItem;
+import com.sun.colornotetaking.data.model.SubItem;
 import com.sun.colornotetaking.data.model.Task;
 
 import java.util.ArrayList;
@@ -15,16 +15,16 @@ import java.util.List;
 public class TaskDAOImpl extends AppDatabase implements TaskDAO {
 
     private static TaskDAOImpl sTaskDAOImpl;
-    private CheckItemDAO mCheckItemDatabase;
+    private SubItemDAO mSubItemDAOImpl;
 
-    public TaskDAOImpl(Context context) {
+    private TaskDAOImpl(Context context, SubItemDAO subItemDAO) {
         super(context);
-        mCheckItemDatabase = CheckItemDAOImpl.getInstance(context);
+        mSubItemDAOImpl = subItemDAO;
     }
 
-    public static TaskDAOImpl getInstance(Context context) {
+    public static TaskDAOImpl getInstance(Context context, SubItemDAO subItemDAO) {
         if (sTaskDAOImpl == null) {
-            sTaskDAOImpl = new TaskDAOImpl(context);
+            sTaskDAOImpl = new TaskDAOImpl(context, subItemDAO);
         }
         return sTaskDAOImpl;
     }
@@ -34,30 +34,29 @@ public class TaskDAOImpl extends AppDatabase implements TaskDAO {
         mSQLiteDatabase = getWritableDatabase();
         mSQLiteDatabase.beginTransaction();
         long rowId = addInfoToTaskTable(task);
-        if (rowId > 0) {
-            mCheckItemDatabase.addCheckItems(task.getCheckItemList(), task.getId());
+        if (rowId > 0 && mSubItemDAOImpl.addSubItems(task.getSubItems(), task.getId()) >= 0) {
             mSQLiteDatabase.setTransactionSuccessful();
             return true;
         }
         mSQLiteDatabase.endTransaction();
         mSQLiteDatabase.close();
         return false;
-
     }
 
     @Override
     public List<Task> getTasks() {
         List<Task> listTask = new ArrayList<>();
         mSQLiteDatabase = getReadableDatabase();
-        mCursor = mSQLiteDatabase.query(TaskEntry.TABLE_NAME, null, null, null, null, null, null);
-        if (mCursor.moveToFirst()) {
-            do {
-                int id = mCursor.getInt(mCursor.getColumnIndex(TaskEntry.ID));
-                Task task = createTask(mCursor, id);
+        Cursor cursor = mSQLiteDatabase.query(TaskEntry.TABLE_NAME, null, null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                int id = cursor.getInt(cursor.getColumnIndex(TaskEntry.ID));
+                Task task = createTask(cursor, id);
                 listTask.add(task);
-            } while (mCursor.moveToNext());
+                cursor.moveToNext();
+            }
         }
-        mCursor.close();
+        cursor.close();
         mSQLiteDatabase.close();
         return listTask;
     }
@@ -68,11 +67,11 @@ public class TaskDAOImpl extends AppDatabase implements TaskDAO {
         mSQLiteDatabase = getReadableDatabase();
         String selection = TaskEntry.ID + " = ?";
         String[] selectionArgs = {String.valueOf(taskId)};
-        mCursor = mSQLiteDatabase.query(TaskEntry.TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        if (mCursor.moveToFirst()) {
-            task = createTask(mCursor, taskId);
+        Cursor cursor = mSQLiteDatabase.query(TaskEntry.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        if (cursor.moveToFirst()) {
+            task = createTask(cursor, taskId);
         }
-        mCursor.close();
+        cursor.close();
         mSQLiteDatabase.close();
         return task;
     }
@@ -96,11 +95,11 @@ public class TaskDAOImpl extends AppDatabase implements TaskDAO {
     }
 
     @Override
-    public boolean removeTask(int task_id) {
+    public boolean removeTask(int taskId) {
         mSQLiteDatabase = getWritableDatabase();
-        if (mCheckItemDatabase.removeAllCheckItemsByTaskId(task_id)) {//remove checkitems have this task_id
+        if (mSubItemDAOImpl.removeAllSubItemsByTaskId(taskId)) {//remove sub item have this taskId
             String taskWhere = TaskEntry.ID + " = ?";
-            String[] taskWhereArg = {Integer.toString(task_id)};
+            String[] taskWhereArg = {Integer.toString(taskId)};
             int result = mSQLiteDatabase.delete(TaskEntry.TABLE_NAME, taskWhere, taskWhereArg);
             if (result > 0) return true;
         }
@@ -124,7 +123,7 @@ public class TaskDAOImpl extends AppDatabase implements TaskDAO {
     }
 
     private Task createTask(Cursor cursor, int taskId) {
-        List<CheckItem> checkItems = mCheckItemDatabase.getCheckItemsByTaskId(taskId);
+        List<SubItem> subItems = mSubItemDAOImpl.getSubItemsByTaskId(taskId);
         return new Task.TaskBuilder(cursor.getString(cursor.getColumnIndex(TaskEntry.TITLE)))
                 .setId(taskId)
                 .setDescription(cursor.getString(cursor.getColumnIndex(TaskEntry.DESCRIPTION)))
@@ -132,7 +131,7 @@ public class TaskDAOImpl extends AppDatabase implements TaskDAO {
                 .setTime(cursor.getString(cursor.getColumnIndex(TaskEntry.TIME)))
                 .setIsPin(cursor.getInt(cursor.getColumnIndex(TaskEntry.IS_PIN)) == 1)
                 .setIsDelete(cursor.getInt(cursor.getColumnIndex(TaskEntry.IS_DELETE)) == 1)
-                .setCheckItemList(checkItems)
+                .setSubItems(subItems)
                 .build();
     }
 

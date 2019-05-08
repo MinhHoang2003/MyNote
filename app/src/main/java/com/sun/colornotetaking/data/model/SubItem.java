@@ -1,17 +1,17 @@
 package com.sun.colornotetaking.data.model;
 
-public class CheckItem {
+public class SubItem {
 
     private int mId;
     private String mName;
     private boolean mIsDone;
 
-    public CheckItem(String name, boolean isDone) {
+    public SubItem(String name, boolean isDone) {
         mName = name;
         this.mIsDone = isDone;
     }
 
-    public CheckItem(int Id, String name, boolean isDone) {
+    public SubItem(int Id, String name, boolean isDone) {
         mId = Id;
         mName = name;
         this.mIsDone = isDone;

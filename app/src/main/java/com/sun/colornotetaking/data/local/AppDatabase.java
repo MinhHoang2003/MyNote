@@ -1,12 +1,11 @@
 package com.sun.colornotetaking.data.local;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.sun.colornotetaking.data.local.entry.CheckItemEntry;
 import com.sun.colornotetaking.data.local.entry.LabelEntry;
+import com.sun.colornotetaking.data.local.entry.SubItemEntry;
 import com.sun.colornotetaking.data.local.entry.TaskEntry;
 
 public class AppDatabase extends SQLiteOpenHelper {
@@ -26,12 +25,12 @@ public class AppDatabase extends SQLiteOpenHelper {
             + TaskEntry.IS_PIN + " boolean default 0 not null, "
             + TaskEntry.IS_DELETE + " boolean default 0 not null);";
 
-    private static final String CREATE_CHECK_ITEM_TABLE = "CREATE TABLE " + CheckItemEntry.TABLE_NAME + "("
-            + CheckItemEntry.ID + " integer primary key, "
-            + CheckItemEntry.NAME + " text not null, "
-            + CheckItemEntry.IS_DONE + " boolean not null, "
-            + CheckItemEntry.TASK_ID + " integer not null, "
-            + " foreign key (" + CheckItemEntry.TASK_ID + ") references "
+    private static final String CREATE_CHECK_ITEM_TABLE = "CREATE TABLE " + SubItemEntry.TABLE_NAME + "("
+            + SubItemEntry.ID + " integer primary key, "
+            + SubItemEntry.NAME + " text not null, "
+            + SubItemEntry.IS_DONE + " boolean not null, "
+            + SubItemEntry.TASK_ID + " integer not null, "
+            + " foreign key (" + SubItemEntry.TASK_ID + ") references "
             + TaskEntry.TABLE_NAME + "(" + TaskEntry.ID + "));";
 
     private static final String CREATE_TAG_TABLE = "CREATE TABLE " + LabelEntry.TABLE_NAME + " ("
@@ -45,12 +44,11 @@ public class AppDatabase extends SQLiteOpenHelper {
             + "primary key (" + TaskEntry.ID + "," + LabelEntry.ID + "));";
 
     private static final String DROP_TASK_TABLE = "DROP TABLE IF EXISTS " + TaskEntry.TABLE_NAME;
-    private static final String DROP_CHECK_ITEM_TABLE = "DROP TABLE IF EXISTS " + CheckItemEntry.TABLE_NAME;
+    private static final String DROP_CHECK_ITEM_TABLE = "DROP TABLE IF EXISTS " + SubItemEntry.TABLE_NAME;
     private static final String DROP_TAG_TABLE = "DROP TABLE IF EXISTS " + LabelEntry.TABLE_NAME;
     private static final String DROP_TASK_AND_TAG_TABLE = "DROP TABLE IF EXISTS task_and_tag";
 
     protected SQLiteDatabase mSQLiteDatabase;
-    protected Cursor mCursor;
 
     protected AppDatabase(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
