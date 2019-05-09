@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.sun.colornotetaking.data.local.entry.LabelEntry;
 import com.sun.colornotetaking.data.local.entry.SubItemEntry;
+import com.sun.colornotetaking.data.local.entry.TaskAndLabelEntry;
 import com.sun.colornotetaking.data.local.entry.TaskEntry;
 
 public class AppDatabase extends SQLiteOpenHelper {
@@ -38,15 +39,15 @@ public class AppDatabase extends SQLiteOpenHelper {
             + LabelEntry.LABEL_NAME + " text not null, "
             + LabelEntry.COLOR + " integer default 0 not null );";
 
-    private static final String CREATE_TASK_AND_TAG_TABLE = "CREATE TABLE task_and_tag ("
-            + TaskEntry.ID + " int not null, "
-            + LabelEntry.ID + " int not null, "
+    private static final String CREATE_TASK_AND_TAG_TABLE = "CREATE TABLE "+ TaskAndLabelEntry.TABLE_NAME+" ("
+            + TaskAndLabelEntry.TASK_ID + " int not null, "
+            + TaskAndLabelEntry.LABEL_ID + " int not null, "
             + "primary key (" + TaskEntry.ID + "," + LabelEntry.ID + "));";
 
     private static final String DROP_TASK_TABLE = "DROP TABLE IF EXISTS " + TaskEntry.TABLE_NAME;
     private static final String DROP_CHECK_ITEM_TABLE = "DROP TABLE IF EXISTS " + SubItemEntry.TABLE_NAME;
     private static final String DROP_TAG_TABLE = "DROP TABLE IF EXISTS " + LabelEntry.TABLE_NAME;
-    private static final String DROP_TASK_AND_TAG_TABLE = "DROP TABLE IF EXISTS task_and_tag";
+    private static final String DROP_TASK_AND_TAG_TABLE = "DROP TABLE IF EXISTS "+ TaskAndLabelEntry.TABLE_NAME;
 
     protected SQLiteDatabase mSQLiteDatabase;
 

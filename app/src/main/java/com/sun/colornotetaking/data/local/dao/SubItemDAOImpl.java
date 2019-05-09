@@ -84,10 +84,10 @@ public class SubItemDAOImpl extends AppDatabase implements SubItemDAO {
     }
 
     @Override
-    public boolean removeSubItem(int id) {
+    public boolean removeSubItem(int subItemId) {
         mSQLiteDatabase = getWritableDatabase();
         String where = SubItemEntry.ID + " = ?";
-        String[] whereArgs = {String.valueOf(id)};
+        String[] whereArgs = {String.valueOf(subItemId)};
         int result = mSQLiteDatabase.delete(SubItemEntry.TABLE_NAME, where, whereArgs);
         mSQLiteDatabase.close();
         return result > 0;

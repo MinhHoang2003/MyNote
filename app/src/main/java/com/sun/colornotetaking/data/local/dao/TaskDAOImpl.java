@@ -44,14 +44,15 @@ public class TaskDAOImpl extends AppDatabase implements TaskDAO {
     }
 
     @Override
-    public List<Task> getTasks() {
+    public List<Task> getTasks(boolean isPin) {
         List<Task> listTask = new ArrayList<>();
         mSQLiteDatabase = getReadableDatabase();
-        Cursor cursor = mSQLiteDatabase.query(TaskEntry.TABLE_NAME, null, null, null, null, null, null);
+        String selection = TaskEntry.IS_PIN + " = ?";
+        String[] selectionArgs = {String.valueOf(isPin)};
+        Cursor cursor = mSQLiteDatabase.query(TaskEntry.TABLE_NAME, null, selection, selectionArgs, null, null, null);
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
-                int id = cursor.getInt(cursor.getColumnIndex(TaskEntry.ID));
-                Task task = createTask(cursor, id);
+                Task task = createTask(cursor);
                 listTask.add(task);
                 cursor.moveToNext();
             }
@@ -62,6 +63,52 @@ public class TaskDAOImpl extends AppDatabase implements TaskDAO {
     }
 
     @Override
+    public List<Task> getDeletedTasks(boolean isDelete) {
+        List<Task> listTask = new ArrayList<>();
+        mSQLiteDatabase = getReadableDatabase();
+        String selection = TaskEntry.IS_DELETE + " = ?";
+        String[] selectionArgs = {String.valueOf(isDelete)};
+        Cursor cursor = mSQLiteDatabase.query(TaskEntry.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                Task task = createTask(cursor);
+                listTask.add(task);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        mSQLiteDatabase.close();
+        return listTask;
+    }
+
+    @Override
+    public List<Task> getTasks(List<Integer> tasksId) {
+        List<Task> tasks = new ArrayList<>();
+        mSQLiteDatabase = getReadableDatabase();
+        String selection = TaskEntry.ID + " IN (" + toString(tasksId) + ")";
+        Cursor cursor = mSQLiteDatabase.query(TaskEntry.TABLE_NAME, null, selection, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                tasks.add(createTask(cursor));
+            } while (cursor.moveToNext());
+        }
+        mSQLiteDatabase.close();
+        cursor.close();
+        return tasks;
+    }
+
+    private String toString(List<Integer> labelId) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < labelId.size(); i++) {
+            if (i != labelId.size() - 1) {
+                builder.append(labelId.get(i));
+                builder.append(", ");
+            } else builder.append(labelId.get(i));
+        }
+        return builder.toString();
+    }
+
+    @Override
     public Task getTaskById(int taskId) {
         Task task = null;
         mSQLiteDatabase = getReadableDatabase();
@@ -69,7 +116,7 @@ public class TaskDAOImpl extends AppDatabase implements TaskDAO {
         String[] selectionArgs = {String.valueOf(taskId)};
         Cursor cursor = mSQLiteDatabase.query(TaskEntry.TABLE_NAME, null, selection, selectionArgs, null, null, null);
         if (cursor.moveToFirst()) {
-            task = createTask(cursor, taskId);
+            task = createTask(cursor);
         }
         cursor.close();
         mSQLiteDatabase.close();
@@ -122,10 +169,11 @@ public class TaskDAOImpl extends AppDatabase implements TaskDAO {
         return rowId;
     }
 
-    private Task createTask(Cursor cursor, int taskId) {
-        List<SubItem> subItems = mSubItemDAOImpl.getSubItemsByTaskId(taskId);
+    private Task createTask(Cursor cursor) {
+        int id = cursor.getInt(cursor.getColumnIndex(TaskEntry.ID));
+        List<SubItem> subItems = mSubItemDAOImpl.getSubItemsByTaskId(id);
         return new Task.TaskBuilder(cursor.getString(cursor.getColumnIndex(TaskEntry.TITLE)))
-                .setId(taskId)
+                .setId(id)
                 .setDescription(cursor.getString(cursor.getColumnIndex(TaskEntry.DESCRIPTION)))
                 .setDate(cursor.getString(cursor.getColumnIndex(TaskEntry.DATE)))
                 .setTime(cursor.getString(cursor.getColumnIndex(TaskEntry.TIME)))
@@ -134,5 +182,4 @@ public class TaskDAOImpl extends AppDatabase implements TaskDAO {
                 .setSubItems(subItems)
                 .build();
     }
-
 }
