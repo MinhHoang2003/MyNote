@@ -14,7 +14,8 @@ public interface SubItemDAO {
 
     boolean editSubItem(SubItem subItem);
 
-    boolean removeSubItem(int id);
+    boolean removeSubItem(int subItemId);
 
     boolean removeAllSubItemsByTaskId(int taskId);
+
 }

@@ -8,7 +8,11 @@ public interface TaskDAO {
 
     boolean addNewTask(Task task);
 
-    List<Task> getTasks();
+    List<Task> getTasks(boolean isPin);
+
+    List<Task> getDeletedTasks(boolean isDelete);
+
+    List<Task> getTasks(List<Integer> tasksId);
 
     Task getTaskById(int taskId);
 

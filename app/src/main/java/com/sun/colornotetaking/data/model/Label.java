@@ -10,6 +10,11 @@ public class Label {
         mColor = color;
     }
 
+    public Label(String name, int color) {
+        mName = name;
+        mColor = color;
+    }
+
     public Label(int id, String name, int Color) {
         mId = id;
         mName = name;
@@ -39,4 +44,5 @@ public class Label {
     public void setName(String name) {
         mName = name;
     }
+
 }
