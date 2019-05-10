@@ -1,9 +1,6 @@
 package com.sun.colornotetaking.data;
 
-import android.content.Context;
-
 import com.sun.colornotetaking.data.local.source.TaskAndLabelDataSource;
-import com.sun.colornotetaking.data.local.source.TaskAndLabelLocalDataSource;
 
 import java.util.List;
 
@@ -16,9 +13,9 @@ public class TaskAndLabelRepository implements TaskAndLabelDataSource {
         mTaskAndLabelDataSource = taskAndLabelDataSource;
     }
 
-    public static TaskAndLabelRepository getInstance(Context context) {
+    public static TaskAndLabelRepository getInstance(TaskAndLabelDataSource taskAndLabelDataSource) {
         if (sTaskAndLabelRepository == null) {
-            sTaskAndLabelRepository = new TaskAndLabelRepository(TaskAndLabelLocalDataSource.getInstance(context));
+            sTaskAndLabelRepository = new TaskAndLabelRepository(taskAndLabelDataSource);
         }
         return sTaskAndLabelRepository;
     }

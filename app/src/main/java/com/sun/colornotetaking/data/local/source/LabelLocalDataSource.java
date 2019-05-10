@@ -1,12 +1,9 @@
 package com.sun.colornotetaking.data.local.source;
 
-import android.content.Context;
-
 import com.sun.colornotetaking.data.OnDataLoadingCallback;
 import com.sun.colornotetaking.data.local.GetDataHandler;
 import com.sun.colornotetaking.data.local.LocalGetDataAsync;
 import com.sun.colornotetaking.data.local.dao.LabelDAO;
-import com.sun.colornotetaking.data.local.dao.LabelDAOImpl;
 import com.sun.colornotetaking.data.model.Label;
 
 import java.util.List;
@@ -20,9 +17,9 @@ public class LabelLocalDataSource implements LabelDataSource {
         mLabelDAO = labelDAO;
     }
 
-    public static LabelLocalDataSource getInstance(Context context) {
+    public static LabelLocalDataSource getInstance(LabelDAO labelDAO) {
         if (sLabelLocalDataSource == null) {
-            sLabelLocalDataSource = new LabelLocalDataSource(LabelDAOImpl.getInstance(context));
+            sLabelLocalDataSource = new LabelLocalDataSource(labelDAO);
         }
         return sLabelLocalDataSource;
     }

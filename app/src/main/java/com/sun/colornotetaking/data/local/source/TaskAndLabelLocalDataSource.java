@@ -1,12 +1,9 @@
 package com.sun.colornotetaking.data.local.source;
 
-import android.content.Context;
-
 import com.sun.colornotetaking.data.OnDataLoadingCallback;
 import com.sun.colornotetaking.data.local.GetDataHandler;
 import com.sun.colornotetaking.data.local.LocalGetDataAsync;
 import com.sun.colornotetaking.data.local.dao.TaskAndLabelDAO;
-import com.sun.colornotetaking.data.local.dao.TaskAndLabelDAOImpl;
 
 import java.util.List;
 
@@ -19,9 +16,9 @@ public class TaskAndLabelLocalDataSource implements TaskAndLabelDataSource {
         mTaskAndLabelDAO = taskAndLabelDAO;
     }
 
-    public static TaskAndLabelLocalDataSource getInstance(Context context) {
+    public static TaskAndLabelLocalDataSource getInstance(TaskAndLabelDAO taskAndLabelDAO) {
         if (sTaskAndLabelLocalDataSource == null) {
-            sTaskAndLabelLocalDataSource = new TaskAndLabelLocalDataSource(TaskAndLabelDAOImpl.getInstance(context));
+            sTaskAndLabelLocalDataSource = new TaskAndLabelLocalDataSource(taskAndLabelDAO);
         }
         return sTaskAndLabelLocalDataSource;
     }

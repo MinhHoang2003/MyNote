@@ -1,9 +1,6 @@
 package com.sun.colornotetaking.data;
 
-import android.content.Context;
-
 import com.sun.colornotetaking.data.local.source.LabelDataSource;
-import com.sun.colornotetaking.data.local.source.LabelLocalDataSource;
 import com.sun.colornotetaking.data.model.Label;
 
 import java.util.List;
@@ -13,14 +10,13 @@ public class LabelRepository implements LabelDataSource {
     private static LabelRepository sLabelRepository;
     private LabelDataSource mLabelDataSource;
 
-    public LabelRepository(LabelDataSource labelDataSource) {
+    private LabelRepository(LabelDataSource labelDataSource) {
         mLabelDataSource = labelDataSource;
     }
 
-    public static LabelRepository getInstance(Context context) {
-
+    public static LabelRepository getInstance(LabelDataSource labelDataSource) {
         if (sLabelRepository == null) {
-            sLabelRepository = new LabelRepository(LabelLocalDataSource.getInstance(context));
+            sLabelRepository = new LabelRepository(labelDataSource);
         }
         return sLabelRepository;
     }

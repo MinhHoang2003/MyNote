@@ -31,6 +31,6 @@ public class LocalGetDataAsync<T> extends AsyncTask<Void, Void, T> {
             if (t != null) mOnDataLoadingCallback.onDataLoaded(t);
             else mOnDataLoadingCallback.onDataNotAvailable(null);
         }
-        mOnDataLoadingCallback.onDataNotAvailable(mException);
+        else mOnDataLoadingCallback.onDataNotAvailable(mException);
     }
 }

@@ -1,12 +1,7 @@
 package com.sun.colornotetaking.data;
 
-import android.content.Context;
-
 import com.sun.colornotetaking.data.local.source.SubItemDataSource;
-import com.sun.colornotetaking.data.local.source.SubItemLocalDataSource;
 import com.sun.colornotetaking.data.model.SubItem;
-
-import java.util.List;
 
 public class SubItemRepository implements SubItemDataSource {
 
@@ -17,9 +12,9 @@ public class SubItemRepository implements SubItemDataSource {
         mSubItemDataSource = subItemDataSource;
     }
 
-    public static SubItemRepository getInstance(Context context) {
+    public static SubItemRepository getInstance(SubItemDataSource subItemDataSource) {
         if (sSubItemRepository == null) {
-            sSubItemRepository = new SubItemRepository(SubItemLocalDataSource.getInstance(context));
+            sSubItemRepository = new SubItemRepository(subItemDataSource);
         }
         return sSubItemRepository;
     }

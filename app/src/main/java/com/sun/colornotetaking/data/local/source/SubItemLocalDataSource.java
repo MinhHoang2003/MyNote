@@ -1,9 +1,6 @@
 package com.sun.colornotetaking.data.local.source;
 
-import android.content.Context;
-
 import com.sun.colornotetaking.data.local.dao.SubItemDAO;
-import com.sun.colornotetaking.data.local.dao.SubItemDAOImpl;
 import com.sun.colornotetaking.data.model.SubItem;
 
 public class SubItemLocalDataSource implements SubItemDataSource {
@@ -15,9 +12,9 @@ public class SubItemLocalDataSource implements SubItemDataSource {
         mSubItemDAO = subItemDAO;
     }
 
-    public static SubItemLocalDataSource getInstance(Context context) {
+    public static SubItemLocalDataSource getInstance(SubItemDAO subItemDAO) {
         if (sSubItemLocalDataSource == null) {
-            sSubItemLocalDataSource = new SubItemLocalDataSource(SubItemDAOImpl.getInstance(context));
+            sSubItemLocalDataSource = new SubItemLocalDataSource(subItemDAO);
         }
         return sSubItemLocalDataSource;
     }

@@ -1,13 +1,9 @@
 package com.sun.colornotetaking.data.local.source;
 
-import android.content.Context;
-
 import com.sun.colornotetaking.data.OnDataLoadingCallback;
 import com.sun.colornotetaking.data.local.GetDataHandler;
 import com.sun.colornotetaking.data.local.LocalGetDataAsync;
-import com.sun.colornotetaking.data.local.dao.SubItemDAO;
 import com.sun.colornotetaking.data.local.dao.TaskDAO;
-import com.sun.colornotetaking.data.local.dao.TaskDAOImpl;
 import com.sun.colornotetaking.data.model.Task;
 
 import java.util.List;
@@ -21,9 +17,9 @@ public class TaskLocalDataSource implements TaskDataSource {
         mTaskDAO = taskDAO;
     }
 
-    public static TaskLocalDataSource getInstance(Context context, SubItemDAO subItemDAO) {
+    public static TaskLocalDataSource getInstance(TaskDAO taskDAO) {
         if (sTaskLocalDataSource == null) {
-            sTaskLocalDataSource = new TaskLocalDataSource(TaskDAOImpl.getInstance(context, subItemDAO));
+            sTaskLocalDataSource = new TaskLocalDataSource(taskDAO);
         }
         return sTaskLocalDataSource;
     }
@@ -38,7 +34,6 @@ public class TaskLocalDataSource implements TaskDataSource {
         }, callback);
         localGetDataAsync.execute();
     }
-
 
     @Override
     public void getDeletedTasks(final boolean isDelete, OnDataLoadingCallback<List<Task>> callback) {

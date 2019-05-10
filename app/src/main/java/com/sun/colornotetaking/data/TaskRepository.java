@@ -1,10 +1,6 @@
 package com.sun.colornotetaking.data;
 
-import android.content.Context;
-
-import com.sun.colornotetaking.data.local.dao.SubItemDAO;
 import com.sun.colornotetaking.data.local.source.TaskDataSource;
-import com.sun.colornotetaking.data.local.source.TaskLocalDataSource;
 import com.sun.colornotetaking.data.model.Task;
 
 import java.util.List;
@@ -18,10 +14,10 @@ public class TaskRepository implements TaskDataSource {
         mTaskDataSource = taskDataSource;
     }
 
-    public static TaskRepository getInstance(Context context, SubItemDAO subItemDAO) {
+    public static TaskRepository getInstance(TaskDataSource taskDataSource) {
 
         if (sTaskRepository == null) {
-            sTaskRepository = new TaskRepository(TaskLocalDataSource.getInstance(context, subItemDAO));
+            sTaskRepository = new TaskRepository(taskDataSource);
         }
         return sTaskRepository;
     }
