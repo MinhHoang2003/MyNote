@@ -7,9 +7,11 @@ import java.util.List;
 
 public interface TaskDataSource {
 
-    void getTasks(boolean isPin,OnDataLoadingCallback<List<Task>> callback);
+    void getTasks(boolean isPin, OnDataLoadingCallback<List<Task>> callback);
 
     void getDeletedTasks(boolean isDelete, OnDataLoadingCallback<List<Task>> callback);
+
+    void getReminder(OnDataLoadingCallback<List<Task>> callback);
 
     void getTaskById(int taskId, OnDataLoadingCallback<Task> callback);
 

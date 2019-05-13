@@ -10,6 +10,8 @@ public interface TaskDAO {
 
     List<Task> getTasks(boolean isPin);
 
+    List<Task> getReminder();
+
     List<Task> getDeletedTasks(boolean isDelete);
 
     List<Task> getTasks(List<Integer> tasksId);

@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import com.sun.colornotetaking.data.OnDataLoadingCallback;
 
 public class LocalGetDataAsync<T> extends AsyncTask<Void, Void, T> {
+
     private GetDataHandler<T> mGetDataHandler;
     private Exception mException;
     private OnDataLoadingCallback<T> mOnDataLoadingCallback;
@@ -30,7 +31,6 @@ public class LocalGetDataAsync<T> extends AsyncTask<Void, Void, T> {
         if (mException == null) {
             if (t != null) mOnDataLoadingCallback.onDataLoaded(t);
             else mOnDataLoadingCallback.onDataNotAvailable(null);
-        }
-        else mOnDataLoadingCallback.onDataNotAvailable(mException);
+        } else mOnDataLoadingCallback.onDataNotAvailable(mException);
     }
 }

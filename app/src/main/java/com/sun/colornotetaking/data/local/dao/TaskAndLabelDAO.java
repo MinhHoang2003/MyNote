@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface TaskAndLabelDAO {
 
-    boolean addItem(int taskId,int labelId);
+    boolean addItem(int taskId, int labelId);
 
     List<Integer> getListLabelsId(int taskId);
 

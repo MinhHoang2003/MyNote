@@ -40,6 +40,7 @@ public class SubItemDAOImpl extends AppDatabase implements SubItemDAO {
 
     @Override
     public int addSubItems(List<SubItem> subItems, long taskId) {
+        if (subItems == null) return 0;
         int size = subItems.size();
         int result = (size > 0) ? size - 1 : 0;
         for (SubItem item : subItems) {
