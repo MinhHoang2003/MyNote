@@ -1,4 +1,4 @@
-package com.sun.colornotetaking.ui.main;
+package com.sun.colornotetaking.ui.home;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,7 +25,7 @@ import com.sun.colornotetaking.data.local.dao.TaskDAOImpl;
 import com.sun.colornotetaking.data.local.source.TaskDataSource;
 import com.sun.colornotetaking.data.local.source.TaskLocalDataSource;
 import com.sun.colornotetaking.data.model.Task;
-import com.sun.colornotetaking.ui.adapter.TaskAdapter;
+import com.sun.colornotetaking.ui.adapter.task.TaskAdapter;
 
 import java.util.List;
 
@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         TaskDataSource taskDataSource = TaskLocalDataSource.getInstance(taskDAO);
         TaskRepository taskRepository = TaskRepository.getInstance(taskDataSource);
         setPresenter(new HomePresenter(taskRepository, this));
-        if (mPresenter != null) mPresenter.start();
+        mPresenter.start();
     }
 
     @Nullable
@@ -105,40 +105,40 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     @Override
-    public void showGetDataError(Exception e) {
-        if (e == null)
-            Toast.makeText(getContext(), getResources().getString(R.string.note_not_existing), Toast.LENGTH_SHORT).show();
-        else Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+    public void showEmptyTasks(Exception e) {
+        if (e == null) {
+            Toast.makeText(getContext(), R.string.msg_note_not_existing, Toast.LENGTH_SHORT).show();
+        } else Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showAddTaskDone() {
-        Toast.makeText(getContext(), getResources().getString(R.string.msg_add_task_done), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.msg_add_task_done, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void showCantAddTask() {
-        Toast.makeText(getContext(), getResources().getString(R.string.msg_can_not_add_task), Toast.LENGTH_SHORT).show();
+    public void showCanNotAddTask() {
+        Toast.makeText(getContext(), R.string.msg_can_not_add_task, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showEditTaskDone() {
-        Toast.makeText(getContext(), getResources().getString(R.string.msg_edit_task_done), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.msg_edit_task_done, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void showCantEditTask() {
-        Toast.makeText(getContext(), getResources().getString(R.string.msg_can_not_edit_task), Toast.LENGTH_SHORT).show();
+    public void showCanNotEditTask() {
+        Toast.makeText(getContext(), R.string.msg_can_not_edit_task, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showRemoveTaskDone() {
-        Toast.makeText(getContext(), getResources().getString(R.string.msg_remove_task_done), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.msg_remove_task_done, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void showCantRemoveTask() {
-        Toast.makeText(getContext(), getResources().getString(R.string.msg_can_not_remove_task), Toast.LENGTH_SHORT).show();
+    public void showCanNotRemoveTask() {
+        Toast.makeText(getContext(), R.string.msg_can_not_remove_task, Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.sun.colornotetaking.ui.main;
+package com.sun.colornotetaking.ui.home;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
                 mDrawerLayout.openDrawer(mNavigationView);
             }
         });
-
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

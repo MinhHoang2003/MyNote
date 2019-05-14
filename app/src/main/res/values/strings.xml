@@ -20,7 +20,7 @@
     <string name="msg_can_not_edit_task">Can not edit task</string>
     <string name="msg_remove_task_done">Remove task done</string>
     <string name="msg_can_not_remove_task">Can not remove this task</string>
-    <string name="note_not_existing">Note Note Existing</string>
+    <string name="msg_note_not_existing">Note Note Existing</string>
     <string-array name="title_toolbar">
         <item>Your Notes</item>
         <item>Reminder Notes</item>

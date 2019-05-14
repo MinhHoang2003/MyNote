@@ -1,4 +1,4 @@
-package com.sun.colornotetaking.ui.main;
+package com.sun.colornotetaking.ui.home;
 
 import com.sun.colornotetaking.data.model.Task;
 import com.sun.colornotetaking.ui.BasePresenter;
@@ -26,19 +26,19 @@ public interface HomeContract {
 
         void showOtherTasks(List<Task> OtherTasks);
 
-        void showGetDataError(Exception e);
+        void showEmptyTasks(Exception e);
 
         void showAddTaskDone();
 
-        void showCantAddTask();
+        void showCanNotAddTask();
 
         void showEditTaskDone();
 
-        void showCantEditTask();
+        void showCanNotEditTask();
 
         void showRemoveTaskDone();
 
-        void showCantRemoveTask();
+        void showCanNotRemoveTask();
 
     }
 }

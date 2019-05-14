@@ -1,9 +1,8 @@
-package com.sun.colornotetaking.ui.adapter;
+package com.sun.colornotetaking.ui.adapter.task;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,23 +13,21 @@ import android.widget.TextView;
 
 import com.sun.colornotetaking.R;
 import com.sun.colornotetaking.data.model.Task;
+import com.sun.colornotetaking.ui.adapter.BaseAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TaskAdapter extends BaseAdapter<Task, TaskAdapter.TaskHolder> implements Filterable {
 
-    private List<Task> mSearchList;
-
     public TaskAdapter(Context context, List<Task> data) {
         super(context, data);
-        mSearchList = new ArrayList<>(data);
     }
 
     @NonNull
     @Override
     public TaskHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.main_task_item_cardview, viewGroup, false);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.item_task, viewGroup, false);
         return new TaskHolder(view);
     }
 
@@ -44,7 +41,7 @@ public class TaskAdapter extends BaseAdapter<Task, TaskAdapter.TaskHolder> imple
         return mTaskFilter;
     }
 
-    class TaskHolder extends RecyclerView.ViewHolder {
+    static class TaskHolder extends RecyclerView.ViewHolder {
 
         private TextView mTextTitle;
         private TextView mTextDateTime;
@@ -73,10 +70,10 @@ public class TaskAdapter extends BaseAdapter<Task, TaskAdapter.TaskHolder> imple
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Task> filteredList = new ArrayList<>();
             if (constraint.length() == 0) {
-                filteredList.addAll(mSearchList);
+                filteredList.addAll(getData());
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
-                for (Task item : mSearchList) {
+                for (Task item : getData()) {
                     if (item.isSearchedItem(filterPattern)) filteredList.add(item);
                 }
             }

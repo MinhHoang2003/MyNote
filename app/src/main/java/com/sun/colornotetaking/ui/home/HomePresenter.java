@@ -1,4 +1,4 @@
-package com.sun.colornotetaking.ui.main;
+package com.sun.colornotetaking.ui.home;
 
 import com.sun.colornotetaking.data.OnDataLoadingCallback;
 import com.sun.colornotetaking.data.TaskRepository;
@@ -21,13 +21,13 @@ public class HomePresenter implements HomeContract.Presenter {
         mTaskRepository.getTasks(true, new OnDataLoadingCallback<List<Task>>() {
             @Override
             public void onDataLoaded(List<Task> data) {
-                if (data.size() == 0) mView.showGetDataError(null);
+                if (data.size() == 0) mView.showEmptyTasks(null);
                 else mView.showPinedTasks(data);
             }
 
             @Override
             public void onDataNotAvailable(Exception e) {
-                mView.showGetDataError(e);
+                mView.showEmptyTasks(e);
             }
         });
     }
@@ -38,13 +38,13 @@ public class HomePresenter implements HomeContract.Presenter {
         mTaskRepository.getTasks(false, new OnDataLoadingCallback<List<Task>>() {
             @Override
             public void onDataLoaded(List<Task> data) {
-                if (data.size() == 0) mView.showGetDataError(null);
+                if (data.size() == 0) mView.showEmptyTasks(null);
                 else mView.showOtherTasks(data);
             }
 
             @Override
             public void onDataNotAvailable(Exception e) {
-                mView.showGetDataError(e);
+                mView.showEmptyTasks(e);
             }
         });
 
@@ -52,22 +52,24 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void addNewTask(Task task) {
-        if (mTaskRepository.addTask(task)) mView.showAddTaskDone();
-        else mView.showCantAddTask();
+        if (mTaskRepository.addTask(task)) {
+            mView.showAddTaskDone();
+        } else mView.showCanNotAddTask();
     }
 
     @Override
     public void editTask(Task task) {
-        if (mTaskRepository.editTask(task)) mView.showEditTaskDone();
-        else mView.showCantEditTask();
+        if (mTaskRepository.editTask(task)) {
+            mView.showEditTaskDone();
+        } else mView.showCanNotEditTask();
     }
 
     @Override
     public void removeTask(int id) {
-        if (mTaskRepository.removeTask(id)) mView.showRemoveTaskDone();
-        else mView.showCantRemoveTask();
+        if (mTaskRepository.removeTask(id)) {
+            mView.showRemoveTaskDone();
+        } else mView.showCanNotRemoveTask();
     }
-
 
     @Override
     public void start() {
