@@ -59,8 +59,10 @@ public class TaskAdapter extends BaseAdapter<Task, TaskAdapter.TaskHolder> imple
         private void bindView(Task task) {
             mTextTitle.setText(task.getTitle());
             String date = task.getDate();
-            if (date == null || date.equals("")) mTextDateTime.setVisibility(View.GONE);
-            else mTextDateTime.setText(task.getDate());
+            if (date == null || date.equals("")) {
+                mTextDateTime.setVisibility(View.GONE);
+            }
+            else mTextDateTime.setText(date);
             mTextProgress.setText(task.getDoneItemsCount());
         }
     }

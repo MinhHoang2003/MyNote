@@ -89,26 +89,29 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     @Override
-    public void showPinedTasks(List<Task> PinedTasks) {
-        if (PinedTasks.size() != 0) mTextPinedTaskTitle.setVisibility(View.VISIBLE);
-        mPinedAdapter = new TaskAdapter(getContext(), PinedTasks);
+    public void showPinedTasks(List<Task> tasks) {
+        if (tasks.size() != 0) mTextPinedTaskTitle.setVisibility(View.VISIBLE);
+        mPinedAdapter = new TaskAdapter(getContext(), tasks);
         mPinedTaskRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mPinedTaskRecyclerView.setAdapter(mPinedAdapter);
     }
 
     @Override
-    public void showOtherTasks(List<Task> OtherTasks) {
-        if (OtherTasks.size() != 0) mTextOtherTaskTitle.setVisibility(View.VISIBLE);
-        mOtherAdapter = new TaskAdapter(getContext(), OtherTasks);
+    public void showOtherTasks(List<Task> tasks) {
+        if (tasks.size() != 0) mTextOtherTaskTitle.setVisibility(View.VISIBLE);
+        mOtherAdapter = new TaskAdapter(getContext(), tasks);
         mNormalTaskRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mNormalTaskRecyclerView.setAdapter(mOtherAdapter);
     }
 
     @Override
-    public void showEmptyTasks(Exception e) {
-        if (e == null) {
-            Toast.makeText(getContext(), R.string.msg_note_not_existing, Toast.LENGTH_SHORT).show();
-        } else Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+    public void showEmptyTasks() {
+        Toast.makeText(getContext(), R.string.msg_note_not_existing, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showLoadTasksError(Exception e) {
+        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

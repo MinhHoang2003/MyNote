@@ -26,7 +26,9 @@ public interface HomeContract {
 
         void showOtherTasks(List<Task> OtherTasks);
 
-        void showEmptyTasks(Exception e);
+        void showEmptyTasks();
+
+        void showLoadTasksError(Exception e);
 
         void showAddTaskDone();
 

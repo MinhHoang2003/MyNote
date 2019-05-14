@@ -20,14 +20,14 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
 
-    private static int sNavigationIndex = 0;
+    private int mNavigationIndex = 0;
     private static final String TAG_HOME = "home";
     private static final String TAG_REMINDER = "reminder";
     private static final String TAG_LABEL = "label";
     private static final String TAG_RECYCLE_BIN = "recycler bin";
     private static final String TAG_SETTING = "setting";
     private static final String TAG_ABOUT = "about author";
-    private static String CURRENT_TAG = TAG_HOME;
+    private String mCurrent_Tag = TAG_HOME;
     private String[] mToolbarTitle;
 
     private Handler mHandler;
@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         initView();
         initNavigationView();
         if (savedInstanceState == null) {
-            CURRENT_TAG = TAG_HOME;
-            sNavigationIndex = 0;
+            mCurrent_Tag = TAG_HOME;
+            mNavigationIndex = 0;
             loadFragment();
         }
     }
@@ -56,12 +56,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setToolbarTitle() {
-        getSupportActionBar().setTitle(mToolbarTitle[sNavigationIndex]);
+        getSupportActionBar().setTitle(mToolbarTitle[mNavigationIndex]);
     }
 
     private Fragment getFragment() {
         Fragment fragment = null;
-        switch (CURRENT_TAG) {
+        switch (mCurrent_Tag) {
             case TAG_REMINDER:
                 // Todo: create reminder fragment
                 break;
@@ -92,35 +92,34 @@ public class MainActivity extends AppCompatActivity {
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
                 switch (menuItem.getItemId()) {
                     case R.id.menu_note:
-                        CURRENT_TAG = TAG_HOME;
-                        sNavigationIndex = 0;
+                        mCurrent_Tag = TAG_HOME;
+                        mNavigationIndex = 0;
                         break;
                     case R.id.menu_reminder:
-                        CURRENT_TAG = TAG_REMINDER;
-                        sNavigationIndex = 1;
+                        mCurrent_Tag = TAG_REMINDER;
+                        mNavigationIndex = 1;
                         break;
                     case R.id.menu_label:
-                        CURRENT_TAG = TAG_LABEL;
-                        sNavigationIndex = 2;
+                        mCurrent_Tag = TAG_LABEL;
+                        mNavigationIndex = 2;
                         break;
                     case R.id.menu_recycle_bin:
-                        CURRENT_TAG = TAG_RECYCLE_BIN;
-                        sNavigationIndex = 3;
+                        mCurrent_Tag = TAG_RECYCLE_BIN;
+                        mNavigationIndex = 3;
                         break;
                     case R.id.menu_setting:
-                        CURRENT_TAG = TAG_SETTING;
-                        sNavigationIndex = 4;
+                        mCurrent_Tag = TAG_SETTING;
+                        mNavigationIndex = 4;
                         break;
                     case R.id.menu_about:
-                        CURRENT_TAG = TAG_ABOUT;
-                        sNavigationIndex = 5;
+                        mCurrent_Tag = TAG_ABOUT;
+                        mNavigationIndex = 5;
                         break;
                     default:
-                        CURRENT_TAG = TAG_HOME;
-                        sNavigationIndex = 0;
+                        mCurrent_Tag = TAG_HOME;
+                        mNavigationIndex = 0;
                         break;
                 }
                 loadFragment();
@@ -136,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment = getFragment();
                 if (fragment == null) return;
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container_layout, fragment, CURRENT_TAG);
+                fragmentTransaction.replace(R.id.fragment_container_layout, fragment, mCurrent_Tag);
                 fragmentTransaction.commitAllowingStateLoss();
             }
         };
