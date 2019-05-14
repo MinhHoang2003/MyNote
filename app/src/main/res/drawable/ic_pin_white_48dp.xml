@@ -38,4 +38,5 @@
         android:strokeLineCap="round"
         android:strokeLineJoin="round"
         android:strokeMiterLimit="10" />
+
 </vector>
