@@ -1,7 +1,6 @@
 package com.sun.colornotetaking.ui.home;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -14,23 +13,23 @@ import android.view.View;
 
 import com.sun.colornotetaking.R;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
     private NavigationView mNavigationView;
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
 
-    private int mNavigationIndex = 0;
+    private Map<String, String> mTitleMap;
     private static final String TAG_HOME = "home";
     private static final String TAG_REMINDER = "reminder";
     private static final String TAG_LABEL = "label";
     private static final String TAG_RECYCLE_BIN = "recycler bin";
     private static final String TAG_SETTING = "setting";
     private static final String TAG_ABOUT = "about author";
-    private String mCurrent_Tag = TAG_HOME;
-    private String[] mToolbarTitle;
-
-    private Handler mHandler;
+    private String mCurrentTag = TAG_HOME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,30 +37,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initView();
         initNavigationView();
+        initToolbarTitle();
         if (savedInstanceState == null) {
-            mCurrent_Tag = TAG_HOME;
-            mNavigationIndex = 0;
+            mCurrentTag = TAG_HOME;
             loadFragment();
         }
     }
 
     private void initView() {
-        mToolbarTitle = getResources().getStringArray(R.array.title_toolbar);
         mToolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_navigation_black_24dp);
-        mHandler = new Handler();
         mNavigationView = findViewById(R.id.navigation_view);
         mDrawerLayout = findViewById(R.id.layout_drawer);
     }
 
     private void setToolbarTitle() {
-        getSupportActionBar().setTitle(mToolbarTitle[mNavigationIndex]);
+        getSupportActionBar().setTitle(mTitleMap.get(mCurrentTag));
     }
 
     private Fragment getFragment() {
         Fragment fragment = null;
-        switch (mCurrent_Tag) {
+        switch (mCurrentTag) {
             case TAG_REMINDER:
                 // Todo: create reminder fragment
                 break;
@@ -94,32 +91,25 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.menu_note:
-                        mCurrent_Tag = TAG_HOME;
-                        mNavigationIndex = 0;
+                        mCurrentTag = TAG_HOME;
                         break;
                     case R.id.menu_reminder:
-                        mCurrent_Tag = TAG_REMINDER;
-                        mNavigationIndex = 1;
+                        mCurrentTag = TAG_REMINDER;
                         break;
                     case R.id.menu_label:
-                        mCurrent_Tag = TAG_LABEL;
-                        mNavigationIndex = 2;
+                        mCurrentTag = TAG_LABEL;
                         break;
                     case R.id.menu_recycle_bin:
-                        mCurrent_Tag = TAG_RECYCLE_BIN;
-                        mNavigationIndex = 3;
+                        mCurrentTag = TAG_RECYCLE_BIN;
                         break;
                     case R.id.menu_setting:
-                        mCurrent_Tag = TAG_SETTING;
-                        mNavigationIndex = 4;
+                        mCurrentTag = TAG_SETTING;
                         break;
                     case R.id.menu_about:
-                        mCurrent_Tag = TAG_ABOUT;
-                        mNavigationIndex = 5;
+                        mCurrentTag = TAG_ABOUT;
                         break;
                     default:
-                        mCurrent_Tag = TAG_HOME;
-                        mNavigationIndex = 0;
+                        mCurrentTag = TAG_HOME;
                         break;
                 }
                 loadFragment();
@@ -129,20 +119,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadFragment() {
-        Runnable loadFragmentRunnable = new Runnable() {
-            @Override
-            public void run() {
-                Fragment fragment = getFragment();
-                if (fragment == null) return;
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container_layout, fragment, mCurrent_Tag);
-                fragmentTransaction.commitAllowingStateLoss();
-            }
-        };
-        if (mHandler != null) {
-            mHandler.post(loadFragmentRunnable);
-            setToolbarTitle();
-            mDrawerLayout.closeDrawer(mNavigationView);
-        }
+        Fragment fragment = getFragment();
+        if (fragment == null) return;
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container_layout, fragment, mCurrentTag);
+        fragmentTransaction.commitAllowingStateLoss();
+        setToolbarTitle();
+        mDrawerLayout.closeDrawer(mNavigationView);
+    }
+
+    private void initToolbarTitle() {
+        mTitleMap = new HashMap<>();
+        mTitleMap.put(TAG_HOME,getResources().getString(R.string.title_note));
+        mTitleMap.put(TAG_REMINDER, getResources().getString(R.string.title_reminder));
+        mTitleMap.put(TAG_LABEL, getResources().getString(R.string.title_label));
+        mTitleMap.put(TAG_RECYCLE_BIN, getResources().getString(R.string.title_recycle_bin));
+        mTitleMap.put(TAG_SETTING, getResources().getString(R.string.title_setting));
+        mTitleMap.put(TAG_ABOUT, getResources().getString(R.string.title_about_author));
     }
 }
