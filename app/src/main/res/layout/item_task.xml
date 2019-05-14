@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="3dp"
-    android:layout_marginRight="3dp"
-    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="@dimen/dp_3"
+    android:layout_marginRight="@dimen/dp_3"
+    android:layout_marginBottom="@dimen/dp_10"
     android:padding="@dimen/dp_10"
     app:cardCornerRadius="8dp"
-    app:cardElevation="5dp">
+    app:cardElevation="@dimen/dp_5">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

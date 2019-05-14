@@ -9,6 +9,7 @@ import java.util.List;
 public interface HomeContract {
 
     interface Presenter extends BasePresenter {
+
         void getPinedTasks();
 
         void getOtherTasks();
