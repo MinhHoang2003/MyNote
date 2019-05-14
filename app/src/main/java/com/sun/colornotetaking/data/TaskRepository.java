@@ -33,6 +33,11 @@ public class TaskRepository implements TaskDataSource {
     }
 
     @Override
+    public void getReminder(OnDataLoadingCallback<List<Task>> callback) {
+        mTaskDataSource.getReminder(callback);
+    }
+
+    @Override
     public void getTaskById(int taskId, OnDataLoadingCallback<Task> callback) {
         mTaskDataSource.getTaskById(taskId, callback);
     }

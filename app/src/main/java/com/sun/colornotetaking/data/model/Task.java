@@ -84,6 +84,23 @@ public class Task {
         mIsDelete = delete;
     }
 
+    public String getDoneItemsCount() {
+        if (mSubItems == null || mSubItems.size() == 0) return "0/0";
+        int size = mSubItems.size();
+        int progess = 0;
+        for (SubItem item : mSubItems) {
+            if (item.isDone()) progess++;
+        }
+        return progess + "/" + size;
+    }
+
+    public boolean isSearchedItem(String searchPattern) {
+        if (searchPattern != null) {
+            return (mTitle.contains(searchPattern));
+        }
+        return false;
+    }
+
     public static class TaskBuilder {
         private String mTitle;
         private int mId;

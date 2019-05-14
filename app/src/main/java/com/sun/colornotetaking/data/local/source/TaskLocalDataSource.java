@@ -37,7 +37,6 @@ public class TaskLocalDataSource implements TaskDataSource {
 
     @Override
     public void getDeletedTasks(final boolean isDelete, OnDataLoadingCallback<List<Task>> callback) {
-
         LocalGetDataAsync<List<Task>> localGetDataAsync = new LocalGetDataAsync<>(new GetDataHandler<List<Task>>() {
             @Override
             public List<Task> getData() throws Exception {
@@ -45,6 +44,17 @@ public class TaskLocalDataSource implements TaskDataSource {
             }
         }, callback);
         localGetDataAsync.execute();
+    }
+
+    @Override
+    public void getReminder(OnDataLoadingCallback<List<Task>> callback) {
+        LocalGetDataAsync<List<Task>> listLocalGetDataAsync = new LocalGetDataAsync<>(new GetDataHandler<List<Task>>() {
+            @Override
+            public List<Task> getData() throws Exception {
+                return mTaskDAO.getReminder();
+            }
+        },callback);
+        listLocalGetDataAsync.execute();
     }
 
     @Override

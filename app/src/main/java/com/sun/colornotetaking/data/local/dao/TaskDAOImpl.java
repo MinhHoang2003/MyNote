@@ -32,13 +32,10 @@ public class TaskDAOImpl extends AppDatabase implements TaskDAO {
     @Override
     public boolean addNewTask(Task task) {
         mSQLiteDatabase = getWritableDatabase();
-        mSQLiteDatabase.beginTransaction();
         long rowId = addInfoToTaskTable(task);
         if (rowId > 0 && mSubItemDAOImpl.addSubItems(task.getSubItems(), task.getId()) >= 0) {
-            mSQLiteDatabase.setTransactionSuccessful();
             return true;
         }
-        mSQLiteDatabase.endTransaction();
         mSQLiteDatabase.close();
         return false;
     }
@@ -47,9 +44,27 @@ public class TaskDAOImpl extends AppDatabase implements TaskDAO {
     public List<Task> getTasks(boolean isPin) {
         List<Task> listTask = new ArrayList<>();
         mSQLiteDatabase = getReadableDatabase();
-        String selection = TaskEntry.IS_PIN + " = ?";
-        String[] selectionArgs = {String.valueOf(isPin)};
+        String selection = TaskEntry.IS_PIN + " = ? AND " + TaskEntry.IS_DELETE + " = ?";
+        String[] selectionArgs = {String.valueOf(isPin ? 1 : 0), String.valueOf(0)};
         Cursor cursor = mSQLiteDatabase.query(TaskEntry.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                Task task = createTask(cursor);
+                listTask.add(task);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        mSQLiteDatabase.close();
+        return listTask;
+    }
+
+    @Override
+    public List<Task> getReminder() {
+        List<Task> listTask = new ArrayList<>();
+        mSQLiteDatabase = getReadableDatabase();
+        String selection = TaskEntry.DATE + " IS NOT NULL AND " + TaskEntry.TIME + " IS NOT NULL";
+        Cursor cursor = mSQLiteDatabase.query(TaskEntry.TABLE_NAME, null, selection, null, null, null, null);
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 Task task = createTask(cursor);
