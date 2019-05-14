@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ColorNoteTaking</string>
+    <string name="app_name">MyNote</string>
     <string name="search_hint_title">Search your note</string>
     <string name="title_note">Your Note</string>
     <string name="title_reminder">Reminder Notes</string>
@@ -31,4 +31,12 @@
     <string name="msg_task_has_remove_from_list"> has remove from list</string>
     <string name="msg_task_has_restore_from_list"> has restore from list</string>
     <string name="msg_can_not_undo_restore">Cannot undo restore</string>
+    <string name="title_pin_this_task">Pin this task</string>
+    <string name="title_delete_this_task">Move to recycle bin</string>
+    <string name="title_task_info">Title</string>
+    <string name="hint_description">Description</string>
+    <string name="title_label_info_screen">Label</string>
+    <string name="title_date_and_time">Date and Time</string>
+    <string name="title_subitems">List sub items:</string>
+    <string name="hint_add_new_subitem">Add new sub task here</string>
 </resources>
