@@ -38,10 +38,7 @@ public class MainActivity extends AppCompatActivity {
         initView();
         initNavigationView();
         initToolbarTitle();
-        if (savedInstanceState == null) {
-            mCurrentTag = TAG_HOME;
-            loadFragment();
-        }
+        loadFragment(mCurrentTag);
     }
 
     private void initView() {
@@ -56,9 +53,9 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(mTitleMap.get(mCurrentTag));
     }
 
-    private Fragment getFragment() {
+    private Fragment getFragment(String tag) {
         Fragment fragment = null;
-        switch (mCurrentTag) {
+        switch (tag) {
             case TAG_REMINDER:
                 // Todo: create reminder fragment
                 break;
@@ -112,25 +109,25 @@ public class MainActivity extends AppCompatActivity {
                         mCurrentTag = TAG_HOME;
                         break;
                 }
-                loadFragment();
+                loadFragment(mCurrentTag);
                 return true;
             }
         });
     }
 
-    private void loadFragment() {
-        Fragment fragment = getFragment();
+    private void loadFragment(String tag) {
+        Fragment fragment = getFragment(tag);
         if (fragment == null) return;
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container_layout, fragment, mCurrentTag);
-        fragmentTransaction.commitAllowingStateLoss();
+        fragmentTransaction.replace(R.id.fragment_container_layout, fragment, tag);
+        fragmentTransaction.commit();
         setToolbarTitle();
         mDrawerLayout.closeDrawer(mNavigationView);
     }
 
     private void initToolbarTitle() {
         mTitleMap = new HashMap<>();
-        mTitleMap.put(TAG_HOME,getResources().getString(R.string.title_note));
+        mTitleMap.put(TAG_HOME, getResources().getString(R.string.title_note));
         mTitleMap.put(TAG_REMINDER, getResources().getString(R.string.title_reminder));
         mTitleMap.put(TAG_LABEL, getResources().getString(R.string.title_label));
         mTitleMap.put(TAG_RECYCLE_BIN, getResources().getString(R.string.title_recycle_bin));
