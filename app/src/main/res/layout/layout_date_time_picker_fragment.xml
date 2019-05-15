@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_20"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:id="@+id/text_title_dialog"
+        android:text="Chose your date and time"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/sp_20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/text_title_date"
+        android:text="Date: "
+        android:textSize="@dimen/sp_20"
+        android:textColor="@color/colorAccent"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginLeft="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@id/text_title_dialog"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/text_date"
+        android:text="Today"
+        android:textSize="@dimen/sp_20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginLeft="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@id/text_title_dialog"
+        app:layout_constraintLeft_toRightOf="@id/text_title_date"/>
+
+    <TextView
+        android:id="@+id/text_title_time"
+        android:text="Time: "
+        android:textSize="@dimen/sp_20"
+        android:textColor="@color/colorAccent"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginLeft="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@id/text_date"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/text_time"
+        android:text="9:00"
+        android:textSize="@dimen/sp_20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginLeft="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@id/text_date"
+        app:layout_constraintLeft_toRightOf="@id/text_title_time"/>
+    <Button
+        android:id="@+id/button_ok"
+        android:text="OK"
+        android:textColor="@color/colorAccent"
+        android:background="@null"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/text_time"
+        app:layout_constraintRight_toRightOf="parent"/>
+    <Button
+        android:id="@+id/button_reset"
+        android:text="RESET"
+        android:textColor="@color/colorAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        app:layout_constraintTop_toBottomOf="@id/text_time"
+        app:layout_constraintRight_toLeftOf="@id/button_ok"/>
+
+    <Button
+        android:id="@+id/button_cancel"
+        android:text="CANCEL"
+        android:textColor="@color/colorAccent"
+        android:background="@null"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/text_time"
+        app:layout_constraintRight_toLeftOf="@id/button_reset"/>
+
+
+</android.support.constraint.ConstraintLayout>

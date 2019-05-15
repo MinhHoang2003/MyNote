@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,26 +43,40 @@ import com.myapp.MyNote.data.local.source.TaskDataSource;
 import com.myapp.MyNote.data.local.source.TaskLocalDataSource;
 import com.myapp.MyNote.data.model.SubItem;
 import com.myapp.MyNote.data.model.Task;
+import com.myapp.MyNote.ui.adapter.SubItemAdapter;
+import com.myapp.MyNote.ui.dialog.DateTimePickerDialog;
+import com.myapp.MyNote.ui.dialog.OnDateTimePicked;
 import com.myapp.MyNote.ui.home.HomeFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class TaskInfoActivity extends AppCompatActivity implements TaskInfoContract.View {
+public class TaskInfoActivity extends AppCompatActivity implements TaskInfoContract.View, View.OnClickListener, OnDateTimePicked {
 
+    //extra key
+    public static final String BUNDLE_DATE = "date";
+    public static final String BUNDLE_TIME = "time";
 
-    FloatingActionButton mActionButton;
+    //view
+    private FloatingActionButton mActionButton;
     private EditText mEditTextTitle;
     private EditText mEditTextDescription;
     private EditText mEditTextAddSubItem;
     private RecyclerView mRecyclerViewSubItems;
+    private SubItemAdapter mSubItemAdapter;
     private TextView mTextViewLabel;
     private TextView mTextViewDate;
     private TextView mTextViewTime;
     private Toolbar mToolbar;
+
+    // one task
     private int mTaskId = -1;
     private boolean isPin = false;
     private boolean isDelete = false;
     private String mDate, mTime;
+    private List<SubItem> mSubItems = new ArrayList<>();
+
+    //presenter
     private TaskInfoContract.Presenter mPresenter;
 
     public static void hideKeyboardFrom(Context context, View view) {
@@ -131,11 +148,30 @@ public class TaskInfoActivity extends AppCompatActivity implements TaskInfoContr
         mTextViewLabel = findViewById(R.id.text_label);
         mTextViewDate = findViewById(R.id.text_date);
         mTextViewTime = findViewById(R.id.text_time);
+        mRecyclerViewSubItems = findViewById(R.id.recycle_sub_items);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setResult(RESULT_CANCELED);
                 onBackPressed();
+            }
+        });
+        mTextViewDate.setOnClickListener(this);
+        mTextViewTime.setOnClickListener(this);
+        mEditTextAddSubItem.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    SubItem item = new SubItem(mEditTextAddSubItem.getText().toString(), false);
+                    mSubItems.add(item);
+                    mPresenter.addSubItem(item, mTaskId);
+                    hideKeyboardFrom(TaskInfoActivity.this, mEditTextAddSubItem);
+                    if (mSubItemAdapter != null)
+                        mSubItemAdapter.notifyItemInserted(mSubItems.size() - 1);
+                    mEditTextAddSubItem.getText().clear();
+                    return true;
+                }
+                return false;
             }
         });
     }
@@ -179,6 +215,7 @@ public class TaskInfoActivity extends AppCompatActivity implements TaskInfoContr
     @Override
     public void showTask(Task task) {
         mEditTextTitle.setText(task.getTitle());
+        mSubItems.addAll(task.getSubItems());
         String description = task.getDescription();
         if (description != null) mEditTextDescription.setText(description);
         mDate = task.getDate();
@@ -187,8 +224,9 @@ public class TaskInfoActivity extends AppCompatActivity implements TaskInfoContr
         if (mTime != null) mTextViewTime.setText(mTime);
         isPin = task.isPin();
         isDelete = task.isDelete();
-        //TODO show sub items
-
+        mSubItemAdapter = new SubItemAdapter(this, mSubItems);
+        mRecyclerViewSubItems.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerViewSubItems.setAdapter(mSubItemAdapter);
     }
 
     @Override
@@ -235,10 +273,35 @@ public class TaskInfoActivity extends AppCompatActivity implements TaskInfoContr
             if (mTaskId > 0) builder.setId(mTaskId);
             if (description.length() != 0) builder.setDescription(description);
             if (mDate != null) builder.setDate(mDate);
+            if (mTime != null) builder.setTime(mTime);
             builder.setSubItems(new ArrayList<SubItem>());
             builder.setIsPin(isPin).setIsDelete(isDelete);
+            builder.setSubItems(mSubItems);
             task = builder.build();
         }
         return task;
+    }
+
+    @Override
+    public void onClick(View v) {
+        FragmentManager manager = getSupportFragmentManager();
+        DateTimePickerDialog dialog = new DateTimePickerDialog();
+        Bundle bundle = new Bundle();
+        bundle.putString(BUNDLE_DATE, mDate);
+        bundle.putString(BUNDLE_TIME, mTime);
+        dialog.setArguments(bundle);
+        dialog.show(manager, "tag");
+    }
+
+    @Override
+    public void onDateTimePickListener(String date, String time) {
+        if (!date.equals(DateTimePickerDialog.NONE)) {
+            mDate = date;
+            mTextViewDate.setText(date);
+        }
+        if (!time.equals(DateTimePickerDialog.NONE)) {
+            mTime = time;
+            mTextViewTime.setText(time);
+        }
     }
 }

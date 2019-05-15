@@ -17,7 +17,7 @@ public class TaskInfoPresenter implements TaskInfoContract.Presenter {
     private TaskAndLabelRepository mTaskAndLabelRepository;
     private SubItemRepository mSubItemRepository;
 
-    public TaskInfoPresenter(TaskInfoContract.View view, TaskRepository taskRepository, LabelRepository labelRepository, TaskAndLabelRepository taskAndLabelRepository, SubItemRepository subItemRepository) {
+    TaskInfoPresenter(TaskInfoContract.View view, TaskRepository taskRepository, LabelRepository labelRepository, TaskAndLabelRepository taskAndLabelRepository, SubItemRepository subItemRepository) {
         mView = view;
         mTaskRepository = taskRepository;
         mLabelRepository = labelRepository;
@@ -66,7 +66,9 @@ public class TaskInfoPresenter implements TaskInfoContract.Presenter {
 
     @Override
     public void addSubItem(SubItem subItem, int taskId) {
-        mSubItemRepository.addSubItems(subItem, taskId);
+        if (taskId != -1) {
+            mSubItemRepository.addSubItems(subItem, taskId);
+        }
     }
 
     @Override
