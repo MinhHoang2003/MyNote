@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">ColorNoteTaking</string>
     <string name="search_hint_title">Search your note</string>
-    <string name="title_note">Note</string>
-    <string name="title_reminder">Reminder</string>
+    <string name="title_note">Your Note</string>
+    <string name="title_reminder">Reminder Notes</string>
     <string name="title_label">Label</string>
-    <string name="title_recycle_bin">Recycle bin</string>
+    <string name="title_recycle_bin">Recycle Bin</string>
     <string name="title_setting">Setting</string>
     <string name="title_about_author">About author</string>
     <string name="title_pined_items">Pined</string>
@@ -14,12 +14,11 @@
     <string name="demo_check_items">0/3</string>
     <string name="title_other">Other</string>
     <string name="title_delete">Delete All Note</string>
-    <string-array name="title_toolbar">
-        <item>Your Notes</item>
-        <item>Reminder Notes</item>
-        <item>Labels</item>
-        <item>Recycle Bin</item>
-        <item>Setting</item>
-        <item>About Author</item>
-    </string-array>
+    <string name="msg_add_task_done">Add New Task Done</string>
+    <string name="msg_can_not_add_task">Can not add new task</string>
+    <string name="msg_edit_task_done">Edit task done</string>
+    <string name="msg_can_not_edit_task">Can not edit task</string>
+    <string name="msg_remove_task_done">Remove task done</string>
+    <string name="msg_can_not_remove_task">Can not remove this task</string>
+    <string name="msg_note_not_existing">Note Note Existing</string>
 </resources>
