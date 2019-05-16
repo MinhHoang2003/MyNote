@@ -67,7 +67,7 @@ public class TaskDeletedAdapter extends BaseAdapter<Task, TaskDeletedAdapter.Vie
         ViewHolder(@NonNull View itemView, OnContextMenuClickListener listener) {
             super(itemView);
             mTextTitle = itemView.findViewById(R.id.text_task_title);
-            mTextDateTime = itemView.findViewById(R.id.text_date_time);
+            mTextDateTime = itemView.findViewById(R.id.text_date);
             mImageCheck = itemView.findViewById(R.id.image_check_items);
             mTextProgress = itemView.findViewById(R.id.text_check_items);
             mOnContextMenuClickListener = listener;

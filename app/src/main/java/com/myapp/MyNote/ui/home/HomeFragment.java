@@ -1,8 +1,10 @@
 package com.myapp.MyNote.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,12 +28,19 @@ import com.myapp.MyNote.data.local.source.TaskDataSource;
 import com.myapp.MyNote.data.local.source.TaskLocalDataSource;
 import com.myapp.MyNote.data.model.Task;
 import com.myapp.MyNote.ui.adapter.recycle_bin.OnContextMenuClickListener;
+import com.myapp.MyNote.ui.adapter.task.ItemClickListener;
 import com.myapp.MyNote.ui.adapter.task.TaskAdapter;
-
+import com.myapp.MyNote.ui.task_info.TaskInfoActivity;
 
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+
 public class HomeFragment extends Fragment implements HomeContract.View {
+
+    public static final int REQUEST_CODE_EDIT = 0;
+    public static final int REQUEST_CODE_CREATE = 1;
+    public static final String KEY_RESULT = "task";
 
     private RecyclerView mPinedTaskRecyclerView;
     private RecyclerView mNormalTaskRecyclerView;
@@ -40,6 +49,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     private HomeContract.Presenter mPresenter;
     private TaskAdapter mPinedAdapter;
     private TaskAdapter mOtherAdapter;
+    private FloatingActionButton mActionButton;
+    SearchView searchView;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -72,7 +83,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
         //event search
         MenuItem menuItem = menu.findItem(R.id.menu_search);
-        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView = (SearchView) menuItem.getActionView();
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -94,6 +105,15 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     public void showPinedTasks(List<Task> tasks) {
         if (tasks.size() != 0) mTextPinedTaskTitle.setVisibility(View.VISIBLE);
         mPinedAdapter = new TaskAdapter(getContext(), tasks);
+        mPinedAdapter.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                int id = mPinedAdapter.getData().get(position).getId();
+                Intent intent = new Intent(getContext(), TaskInfoActivity.class);
+                intent.putExtra(KEY_RESULT, id);
+                startActivityForResult(intent, REQUEST_CODE_EDIT);
+            }
+        });
         mPinedTaskRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mPinedTaskRecyclerView.setAdapter(mPinedAdapter);
         mPinedAdapter.setOnContextMenuClickListener(new OnContextMenuClickListener() {
@@ -114,6 +134,15 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     public void showOtherTasks(List<Task> tasks) {
         if (tasks.size() != 0) mTextOtherTaskTitle.setVisibility(View.VISIBLE);
         mOtherAdapter = new TaskAdapter(getContext(), tasks);
+        mOtherAdapter.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                int id = mOtherAdapter.getData().get(position).getId();
+                Intent intent = new Intent(getContext(), TaskInfoActivity.class);
+                intent.putExtra(KEY_RESULT, id);
+                startActivityForResult(intent, REQUEST_CODE_EDIT);
+            }
+        });
         mNormalTaskRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mNormalTaskRecyclerView.setAdapter(mOtherAdapter);
         mOtherAdapter.setOnContextMenuClickListener(new OnContextMenuClickListener() {
@@ -180,5 +209,23 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         mNormalTaskRecyclerView = view.findViewById(R.id.recycle_normal);
         mTextOtherTaskTitle = view.findViewById(R.id.title_normal);
         mTextPinedTaskTitle = view.findViewById(R.id.title_pin);
+        mActionButton = view.findViewById(R.id.fab);
+        mActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), TaskInfoActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_CREATE);
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (mPinedAdapter != null) mPinedAdapter.getData().clear();
+            if (mOtherAdapter != null) mOtherAdapter.getData().clear();
+            mPresenter.start();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

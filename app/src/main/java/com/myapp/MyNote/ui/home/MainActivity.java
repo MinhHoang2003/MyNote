@@ -1,7 +1,10 @@
 package com.myapp.MyNote.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView mNavigationView;
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
+    private FloatingActionButton mActionButton;
 
     private Map<String, String> mTitleMap;
     private static final String TAG_HOME = "home";
@@ -136,5 +140,10 @@ public class MainActivity extends AppCompatActivity {
         mTitleMap.put(TAG_RECYCLE_BIN, getResources().getString(R.string.title_recycle_bin));
         mTitleMap.put(TAG_SETTING, getResources().getString(R.string.title_setting));
         mTitleMap.put(TAG_ABOUT, getResources().getString(R.string.title_about_author));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

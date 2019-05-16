@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name="com.myapp.MyNote.ui.task.info.TaskInfoActivity"/>
+        <activity android:name="com.myapp.MyNote.ui.task_info.TaskInfoActivity"/>
         <activity android:name="com.myapp.MyNote.ui.home.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

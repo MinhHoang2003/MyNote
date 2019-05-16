@@ -36,7 +36,8 @@
     <string name="title_task_info">Title</string>
     <string name="hint_description">Description</string>
     <string name="title_label_info_screen">Label</string>
-    <string name="title_date_and_time">Date and Time</string>
+    <string name="title_date">Date</string>
     <string name="title_subitems">List sub items:</string>
     <string name="hint_add_new_subitem">Add new sub task here</string>
+    <string name="title_time">Time</string>
 </resources>
