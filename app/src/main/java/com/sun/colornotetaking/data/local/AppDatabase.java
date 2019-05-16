@@ -1,16 +1,13 @@
 package com.sun.colornotetaking.data.local;
 
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.sun.colornotetaking.data.local.dao.TaskAndLabelDAO;
 import com.sun.colornotetaking.data.local.entry.LabelEntry;
 import com.sun.colornotetaking.data.local.entry.SubItemEntry;
 import com.sun.colornotetaking.data.local.entry.TaskAndLabelEntry;
 import com.sun.colornotetaking.data.local.entry.TaskEntry;
-
 
 public class AppDatabase extends SQLiteOpenHelper {
 

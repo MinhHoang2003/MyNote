@@ -23,7 +23,9 @@ public class RecycleBinPresenter implements RecycleBinContract.Presenter {
             public void onDataLoaded(List<Task> data) {
                 if (data.size() != 0) {
                     mView.showDeletedTask(data);
-                } else mView.showEmptyTask();
+                } else {
+                    mView.showEmptyTask();
+                }
             }
 
             @Override

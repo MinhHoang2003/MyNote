@@ -28,4 +28,6 @@
     <string name="msg_restore_task_done">Restored task</string>
     <string name="msg_restore_task_error">Can not restore task</string>
     <string name="action_undo">UNDO</string>
+    <string name="msg_task_has_remove_from_list"> has remove from list</string>
+    <string name="msg_task_has_restore_from_list"> has restore from list</string>
 </resources>

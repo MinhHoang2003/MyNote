@@ -82,7 +82,7 @@ public class TaskDAOImpl extends AppDatabase implements TaskDAO {
         List<Task> listTask = new ArrayList<>();
         mSQLiteDatabase = getReadableDatabase();
         String selection = TaskEntry.IS_DELETE + " = ?";
-        String[] selectionArgs = {String.valueOf(isDelete?1:0)};
+        String[] selectionArgs = {String.valueOf(isDelete ? 1 : 0)};
         Cursor cursor = mSQLiteDatabase.query(TaskEntry.TABLE_NAME, null, selection, selectionArgs, null, null, null);
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {

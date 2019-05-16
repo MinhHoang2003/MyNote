@@ -24,7 +24,7 @@ import com.sun.colornotetaking.data.local.dao.TaskDAOImpl;
 import com.sun.colornotetaking.data.local.source.TaskDataSource;
 import com.sun.colornotetaking.data.local.source.TaskLocalDataSource;
 import com.sun.colornotetaking.data.model.Task;
-import com.sun.colornotetaking.ui.adapter.RecycleAdapter;
+import com.sun.colornotetaking.ui.adapter.TaskDeletedAdapter;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class RecycleBinFragment extends Fragment implements RecycleBinContract.V
 
     private RecyclerView mRecyclerViewDeletedTask;
     private RecycleBinContract.Presenter mPresenter;
-    private RecycleAdapter mAdapter;
+    private TaskDeletedAdapter mAdapter;
 
     @Nullable
     @Override
@@ -54,7 +54,7 @@ public class RecycleBinFragment extends Fragment implements RecycleBinContract.V
 
     @Override
     public void showDeletedTask(List<Task> tasks) {
-        mAdapter = new RecycleAdapter(getContext(), tasks);
+        mAdapter = new TaskDeletedAdapter(getContext(), tasks);
         mRecyclerViewDeletedTask.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerViewDeletedTask.setAdapter(mAdapter);
     }
@@ -95,17 +95,20 @@ public class RecycleBinFragment extends Fragment implements RecycleBinContract.V
         final int position = item.getGroupId();
         final Task task = mAdapter.getData().get(position);
         Snackbar snackbar = null;
+        StringBuilder message = new StringBuilder(task.getTitle());
         switch (item.getItemId()) {
-            case RecycleAdapter.ID_DELETE:
+            case TaskDeletedAdapter.ID_DELETE:
                 if (mPresenter.removeTask(task.getId())) {
                     mAdapter.deleteOrRestoreTask(position);
-                    snackbar = Snackbar.make(getView(), task.getTitle() + " has removed from list", Snackbar.LENGTH_LONG);
+                    message.append(R.string.msg_task_has_remove_from_list);
+                    snackbar = Snackbar.make(getView(), message, Snackbar.LENGTH_LONG);
                 }
                 break;
-            case RecycleAdapter.ID_RESTORE:
+            case TaskDeletedAdapter.ID_RESTORE:
                 if (mPresenter.restoreDeletedTask(task)) {
                     mAdapter.deleteOrRestoreTask(position);
-                    snackbar = Snackbar.make(getView(), task.getTitle() + " has restore from list", Snackbar.LENGTH_LONG);
+                    message.append(R.string.msg_task_has_restore_from_list);
+                    snackbar = Snackbar.make(getView(), message, Snackbar.LENGTH_LONG);
                 }
                 break;
         }

@@ -80,8 +80,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                mPinedAdapter.getFilter().filter(s);
-                mOtherAdapter.getFilter().filter(s);
+                if(mPinedAdapter!=null) mPinedAdapter.getFilter().filter(s);
+                if(mOtherAdapter!=null) mOtherAdapter.getFilter().filter(s);
                 return true;
             }
         });
