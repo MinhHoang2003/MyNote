@@ -30,4 +30,5 @@
     <string name="action_undo">UNDO</string>
     <string name="msg_task_has_remove_from_list"> has remove from list</string>
     <string name="msg_task_has_restore_from_list"> has restore from list</string>
+    <string name="msg_can_not_undo_restore">Cannot undo restore</string>
 </resources>

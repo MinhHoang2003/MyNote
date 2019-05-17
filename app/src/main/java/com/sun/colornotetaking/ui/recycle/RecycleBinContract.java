@@ -11,9 +11,11 @@ public interface RecycleBinContract {
 
         void getDeletedTask();
 
-        boolean removeTask(int id);
+        void removeTask(int id);
 
-        boolean restoreDeletedTask(Task task);
+        void restoreDeletedTask(Task task);
+
+        void undoRestoreTask(Task task);
 
     }
 
@@ -25,7 +27,11 @@ public interface RecycleBinContract {
 
         void showGetTaskError(Exception e);
 
-        void showCanNotRemoveTask();
+        void showCanNotUndoRestore();
+
+        void  showCanNotRemoveTask();
+
+        void showRestoreTaskDone();
 
         void showCanNotRestoreTask();
     }

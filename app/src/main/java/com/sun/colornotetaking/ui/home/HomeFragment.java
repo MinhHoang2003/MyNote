@@ -25,6 +25,7 @@ import com.sun.colornotetaking.data.local.dao.TaskDAOImpl;
 import com.sun.colornotetaking.data.local.source.TaskDataSource;
 import com.sun.colornotetaking.data.local.source.TaskLocalDataSource;
 import com.sun.colornotetaking.data.model.Task;
+import com.sun.colornotetaking.ui.adapter.recycle_bin.OnContextMenuClickListener;
 import com.sun.colornotetaking.ui.adapter.task.TaskAdapter;
 
 import java.util.List;
@@ -80,8 +81,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                if(mPinedAdapter!=null) mPinedAdapter.getFilter().filter(s);
-                if(mOtherAdapter!=null) mOtherAdapter.getFilter().filter(s);
+                if (mPinedAdapter != null) mPinedAdapter.getFilter().filter(s);
+                if (mOtherAdapter != null) mOtherAdapter.getFilter().filter(s);
                 return true;
             }
         });
@@ -94,6 +95,18 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         mPinedAdapter = new TaskAdapter(getContext(), tasks);
         mPinedTaskRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mPinedTaskRecyclerView.setAdapter(mPinedAdapter);
+        mPinedAdapter.setOnContextMenuClickListener(new OnContextMenuClickListener() {
+            @Override
+            public void onDeleteItem(int position) {
+                mPresenter.editTask(mPinedAdapter.getData().get(position));
+                mPinedAdapter.deleteTask(position);
+            }
+
+            @Override
+            public void onRestoreItem(int position) {
+
+            }
+        });
     }
 
     @Override
@@ -102,6 +115,18 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         mOtherAdapter = new TaskAdapter(getContext(), tasks);
         mNormalTaskRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mNormalTaskRecyclerView.setAdapter(mOtherAdapter);
+        mOtherAdapter.setOnContextMenuClickListener(new OnContextMenuClickListener() {
+            @Override
+            public void onDeleteItem(int position) {
+                mPresenter.editTask(mOtherAdapter.getData().get(position));
+                mOtherAdapter.deleteTask(position);
+            }
+
+            @Override
+            public void onRestoreItem(int position) {
+
+            }
+        });
     }
 
     @Override

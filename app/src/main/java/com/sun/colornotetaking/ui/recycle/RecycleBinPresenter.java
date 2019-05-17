@@ -36,24 +36,24 @@ public class RecycleBinPresenter implements RecycleBinContract.Presenter {
     }
 
     @Override
-    public boolean removeTask(int id) {
-        if (mTaskRepository.removeTask(id)) {
-            return true;
-        } else {
-            mView.showCanNotRemoveTask();
-        }
-        return false;
+    public void removeTask(int id) {
+        if (!mTaskRepository.removeTask(id)) mView.showCanNotRemoveTask();
     }
 
     @Override
-    public boolean restoreDeletedTask(Task task) {
+    public void restoreDeletedTask(Task task) {
         task.setDelete(false);
         if (mTaskRepository.editTask(task)) {
-            return true;
+            mView.showRestoreTaskDone();
         } else {
             mView.showCanNotRestoreTask();
         }
-        return false;
+    }
+
+    @Override
+    public void undoRestoreTask(Task task) {
+        task.setDelete(true);
+        if (!mTaskRepository.editTask(task)) mView.showCanNotUndoRestore();
     }
 
     @Override

@@ -67,6 +67,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void editTask(Task task) {
+        task.setDelete(true);
         if (mTaskRepository.editTask(task)) {
             mView.showEditTaskDone();
         } else {
