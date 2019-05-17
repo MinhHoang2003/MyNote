@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.sun.colornotetaking.R;
+import com.sun.colornotetaking.ui.recycle.RecycleBinFragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 // Todo: create label fragment
                 break;
             case TAG_RECYCLE_BIN:
+                fragment = new RecycleBinFragment();
                 break;
             case TAG_SETTING:
                 // Todo: create setting fragment

@@ -16,7 +16,7 @@
         android:focusableInTouchMode="true">
 
         <TextView
-            android:id="@+id/test_text_task_title"
+            android:id="@+id/text_task_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_8"
@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/test_text_date_time"
+            android:id="@+id/text_date_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_8"
@@ -42,11 +42,11 @@
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/test_image_check_items"
-            app:layout_constraintTop_toBottomOf="@id/test_text_task_title" />
+            app:layout_constraintRight_toLeftOf="@id/image_check_items"
+            app:layout_constraintTop_toBottomOf="@id/text_task_title" />
 
         <ImageView
-            android:id="@+id/test_image_check_items"
+            android:id="@+id/image_check_items"
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20"
             android:layout_marginLeft="@dimen/dp_8"
@@ -54,13 +54,13 @@
             android:layout_marginBottom="@dimen/dp_8"
             android:src="@drawable/ic_check_box_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/test_text_date_time"
-            app:layout_constraintRight_toLeftOf="@id/test_text_check_items"
+            app:layout_constraintLeft_toRightOf="@id/text_date_time"
+            app:layout_constraintRight_toLeftOf="@id/text_check_items"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/test_text_task_title" />
+            app:layout_constraintTop_toBottomOf="@id/text_task_title" />
 
         <TextView
-            android:id="@+id/test_text_check_items"
+            android:id="@+id/text_check_items"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_10"
@@ -70,8 +70,8 @@
             android:textSize="@dimen/sp_15"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/test_image_check_items"
-            app:layout_constraintTop_toBottomOf="@id/test_text_task_title" />
+            app:layout_constraintLeft_toRightOf="@id/image_check_items"
+            app:layout_constraintTop_toBottomOf="@id/text_task_title" />
 
     </android.support.constraint.ConstraintLayout>
 

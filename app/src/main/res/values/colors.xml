@@ -7,4 +7,11 @@
     <color name="color_white">#FFFFFF</color>
     <color name="color_bg_header_navigation_view">#8DFDD835</color>
     <color name="color_bg_date_reminder_drawable">#C0CA33</color>
+    <!--Color for label-->
+    <color name="colorDefault">#FFBD33</color>
+    <color name="color_blue">#33FFBD</color>
+    <color name="color_green">#33FF57</color>
+    <color name="color_yellow">#DBFF33</color>
+    <color name="color_red">#FF5733</color>
+    <color name="color_green_1">#75FF33</color>
 </resources>
